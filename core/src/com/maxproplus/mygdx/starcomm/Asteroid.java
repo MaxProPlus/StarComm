@@ -56,5 +56,9 @@ public class Asteroid extends Hero {
 		speed = 4.0f + (float) Math.random() * 4.0f;
 		circle.radius = 28 * (0.5f + hp * 0.1f);
 	}
+	
+	public void dispose(){
+		texture.dispose();
+	}
 
 }

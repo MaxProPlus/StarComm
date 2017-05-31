@@ -11,11 +11,9 @@ public class Weapon {
 		boolean active;
 		public Vector2 position;
 		float speed;
-		int damage;
 
 		public Bullet() {
 			speed = 16f;
-			damage = 3;
 			active = false;
 			position = new Vector2(0, 0);
 		}
@@ -34,11 +32,13 @@ public class Weapon {
 
 	Bullet[] bullet;
 	Texture texture;
-	private int fireCounter;
-	private int fireRate;
+	private long fireCounterLast;
+	private long fireCounter;
+	private double fireRate;
+	int damage;
 
 	public Weapon(int type, int ammo) {
-		fireCounter = 0;
+		fireCounterLast = System.nanoTime();
 		bullet = new Bullet[ammo];
 		for (int i = 0; i < bullet.length; i++) {
 			bullet[i] = new Bullet();
@@ -46,7 +46,13 @@ public class Weapon {
 		switch (type) {
 		case 1:
 			texture = new Texture("bullet64x32.png");
-			fireRate = 12;
+			fireRate = 1*100000000L;
+			damage = 3;
+			break;
+		case 2:
+			texture = new Texture("spaceMissiles_006.png");
+			fireRate = 6*100000000L;
+			damage = 6;
 			break;
 		}
 
@@ -69,8 +75,9 @@ public class Weapon {
 	}
 
 	public void fire(float x, float y) {
-		fireCounter++;
-		if (fireCounter == fireRate) {
+		fireCounter = System.nanoTime();
+		if (fireCounter-fireCounterLast >= fireRate) {
+			fireCounterLast = System.nanoTime();
 			for (int i = 0; i < bullet.length; i++) {
 				if (!bullet[i].active) {
 					bullet[i].shot(x + 50, y + 16);
@@ -84,6 +91,10 @@ public class Weapon {
 
 	public Bullet[] getBullet() {
 		return bullet;
+	}
+	
+	public void dispose() {
+		texture.dispose();
 	}
 
 }

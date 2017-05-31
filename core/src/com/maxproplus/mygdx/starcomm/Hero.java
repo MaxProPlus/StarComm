@@ -51,7 +51,16 @@ public class Hero {
 		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 			weapon.fire(position.x, position.y);
 		}
+		if (Gdx.input.isKeyPressed(Input.Keys.NUM_1))
+				weapon = new Weapon(1,200); 
+		if (Gdx.input.isKeyPressed(Input.Keys.NUM_2))
+			weapon = new Weapon(2,200); 
 
+	}
+	
+	public void dispose() {
+		texture.dispose();
+		weapon.dispose();
 	}
 
 }
