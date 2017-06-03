@@ -1,8 +1,8 @@
-package com.maxproplus.mygdx.starcomm;
+package com.maxproplus.mygdx.starcomm.gameobjects;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.maxproplus.mygdx.starcomm.gamehelpers.AssetLoader;
 
 public class Background {
 	private class Star {
@@ -23,31 +23,33 @@ public class Background {
 		}
 	}
 
-	private Texture background;
-	private Texture textureStar;
+	
 	private Star[] stars;
 
-	protected Background() {
-		background = new Texture("staticback.jpg");
-		textureStar = new Texture("star12.tga");
+	public Background() {
 		stars = new Star[240];
 		for (int i = 0; i < stars.length; i++) {
 			stars[i] = new Star();
 		}
 	}
 
-	protected void render(SpriteBatch batch) {
-		batch.draw(background, 0, 0);
+	public void render(SpriteBatch batch) {
+		batch.disableBlending();
+		batch.draw(AssetLoader.background, 0, 0);
+		batch.enableBlending();
 		for (int i = 0; i < stars.length; i++) {
-			batch.draw(textureStar, stars[i].pos.x, stars[i].pos.y);
+			batch.draw(AssetLoader.textureStar, stars[i].pos.x, stars[i].pos.y);
 		}
 
 	}
 
-	protected void update() {
+	public void update() {
 		for (int i = 0; i < stars.length; i++) {
 			stars[i].update();
 		}
+	}
+	
+	public void dispose() {
 	}
 
 }

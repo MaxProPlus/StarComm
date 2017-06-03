@@ -1,4 +1,4 @@
-package com.maxproplus.mygdx.starcomm;
+package com.maxproplus.mygdx.starcomm.gameobjects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -27,6 +27,9 @@ public class Level {
 		hero.update();
 		for (int i = 0; i < asteroids.length; i++) {
 			asteroids[i].update();
+			if (hero.rectangle.contains(asteroids[i].circle)) {
+				hero.takeDamege(asteroids[i].dmg);
+			}
 
 		}
 		for (int i = 0; i < hero.weapon.getBullet().length; i++) {
@@ -37,6 +40,7 @@ public class Level {
 						asteroids[j].takeDamage(hero.weapon.damage);
 					}
 		}
+		
 	}
 	
 	public void dispose() {

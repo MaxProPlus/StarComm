@@ -1,9 +1,10 @@
-package com.maxproplus.mygdx.starcomm;
+package com.maxproplus.mygdx.starcomm.gameobjects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.maxproplus.mygdx.starcomm.gamehelpers.AssetLoader;
 
 public class Weapon {
 	class Bullet {
@@ -31,7 +32,6 @@ public class Weapon {
 	}
 
 	Bullet[] bullet;
-	Texture texture;
 	private long fireCounterLast;
 	private long fireCounter;
 	private double fireRate;
@@ -45,12 +45,12 @@ public class Weapon {
 		}
 		switch (type) {
 		case 1:
-			texture = new Texture("bullet64x32.png");
+			AssetLoader.bullet = new Texture("bullet64x32.png");
 			fireRate = 1*100000000L;
 			damage = 3;
 			break;
 		case 2:
-			texture = new Texture("spaceMissiles_006.png");
+			AssetLoader.bullet = new Texture("spaceMissiles_006.png");
 			fireRate = 6*100000000L;
 			damage = 6;
 			break;
@@ -61,7 +61,7 @@ public class Weapon {
 	public void render(SpriteBatch batch) {
 		for (int i = 0; i < bullet.length; i++)
 			if (bullet[i].active)
-				batch.draw(texture, bullet[i].position.x, bullet[i].position.y);
+				batch.draw(AssetLoader.bullet, bullet[i].position.x, bullet[i].position.y);
 	}
 
 	public void update() {
@@ -94,7 +94,6 @@ public class Weapon {
 	}
 	
 	public void dispose() {
-		texture.dispose();
 	}
 
 }

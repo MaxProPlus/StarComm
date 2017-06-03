@@ -1,31 +1,32 @@
-package com.maxproplus.mygdx.starcomm;
+package com.maxproplus.mygdx.starcomm.gameobjects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.maxproplus.mygdx.starcomm.gamehelpers.AssetLoader;
 
 public class Hero {
 
-	private Texture texture;
+	
 	protected Vector2 position;
-	protected Rectangle rectangle;
+	Rectangle rectangle;
 	protected float speed;
 	protected int hp;
 	public Weapon weapon;
 
 	protected Hero() {
-		texture = new Texture("ship64.png");
+		
 		position = new Vector2(0, 720 / 2);
-		rectangle = new Rectangle(position.x, position.y, texture.getWidth(), texture.getHeight());
+		rectangle = new Rectangle(position.x, position.y, AssetLoader.hero.getWidth(), AssetLoader.hero.getHeight());
 		speed = 10f;
+		hp = 100;
 		weapon = new Weapon(1, 200);
 	}
 
 	protected void render(SpriteBatch batch) {
-		batch.draw(texture, position.x, position.y);
+		batch.draw(AssetLoader.hero, position.x, position.y);
 		weapon.render(batch);
 
 	}
@@ -58,8 +59,16 @@ public class Hero {
 
 	}
 	
+	public void takeDamege(int dmg) {
+		hp -= dmg;
+		position.x=50;
+		if (hp <= 0) {
+			dispose();
+			return;
+		}
+	}
+	
 	public void dispose() {
-		texture.dispose();
 		weapon.dispose();
 	}
 
